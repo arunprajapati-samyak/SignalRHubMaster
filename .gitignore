@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/SignalRHubMaster/SignalRHubMaster/bin
+/SignalRHubMaster/.vs
+/SignalRHubMaster/SignalRHubMaster/obj
