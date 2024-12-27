@@ -3,10 +3,26 @@ using System.Collections.Concurrent;
 
 namespace SignalRHubMaster.HubConnection
 {
+    public class Connection
+    {
+        public string ConnectionId { get; set; }
+    }
+
     public class SignalRHubConnection : Hub
     {
         // Thread-safe collection to store connected users
         private static ConcurrentDictionary<string, string> ConnectedUsers = new ConcurrentDictionary<string, string>();
+        List<Connection> connections = new List<Connection>();
+        public SignalRHubConnection()
+        {
+
+        }
+
+        public override Task OnConnectedAsync()
+        {
+            connections.Add(new Connection() { ConnectionId = Context.ConnectionId });
+            return base.OnConnectedAsync();
+        }
 
         // Method to handle user login and subscription
         public async Task Login(string username)
