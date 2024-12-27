@@ -11,7 +11,7 @@ namespace SignalRHubMaster.HubConnection
     public class SignalRHubConnection : Hub
     {
         // Thread-safe collection to store connected users
-        private static ConcurrentDictionary<string, string> ConnectedUsers = new ConcurrentDictionary<string, string>();
+        private static ConcurrentDictionary<string, string[]> ConnectedUsers = new ConcurrentDictionary<string, string[]>();
         List<Connection> connections = new List<Connection>();
         public SignalRHubConnection()
         {
@@ -25,10 +25,10 @@ namespace SignalRHubMaster.HubConnection
         }
 
         // Method to handle user login and subscription
-        public async Task Login(string username)
+        public async Task Login(string username, string type, string lang)
         {
             // Add the user to the connected users list with their connection ID
-            ConnectedUsers[Context.ConnectionId] = username;
+            ConnectedUsers[Context.ConnectionId] = new string[] { username, type, lang };
 
             // Notify all clients about the updated user list
             await Clients.All.SendAsync("UpdateUserList", ConnectedUsers.Values);
